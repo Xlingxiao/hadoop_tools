@@ -52,8 +52,8 @@ public class HdfsTools {
 
     /**
      * 遍历文件夹下所有文件
-     * @param dirPath
-     * @throws IOException
+     * @param dirPath 目标文件
+     * @throws IOException 异常
      */
     void test(Path dirPath) throws IOException {
         FileStatus[] status = fs.listStatus(dirPath);
