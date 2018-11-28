@@ -38,7 +38,8 @@ hadoop的Mapper 和 Reducer。然后在主要的类中将mapper 和 reducer 进�
     3.8：job.waitForCompletion(true) 执行
 Mapper类来说输入的key-value就相当于整个输入的文件数据，并且我们不需要管
 hadoop是如何输入的数据传给这个mapper的，hadoop自动为我们将输入的数据都装载
-到了mapper的输入中的key-value中了。在mapper中我们只需要做好map的操作就行了。
+到了mapper的输入中的key-value中了。mapper中会对每行数据执行map函数，map的
+输入数据也就是读取的每行数据。
 将需要输出的数据放到context对象中。reducer会自动的收到这些map阶段的数据。
 Reducer类：它获得的key是唯一的，而value是一个迭代对象，是所有key相同的value
 的集合。reducer会自动运行根据每个唯一的key值运行一次reduce函数。最后reducer
