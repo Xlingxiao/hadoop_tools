@@ -31,18 +31,39 @@ public class Top20Info {
     }
 
     public static class Top20InfoReducer extends Reducer<Text, Text, Text, NullWritable> {
-
+        //        c9ae3e30-521f-4816-8439-17fcd78132ca	iOS	11.2	2017-01-07T23:59:55	2017-01-08T00:00:01	6
+        private Text outputKey = new Text();
+        {
+            outputKey.set("设备ID" + "\t首次登陆时间" + "\t总在线时间" + "\t总在线次数" );
+        }
         @Override
         protected void reduce(Text key, Iterable<Text> values, Context context)
                 throws IOException, InterruptedException {
-            super.reduce(key, values, context);
+//            在线时间
+            int grossTime = 0;
+//            上线次数
+            int grossTimes = 0;
+//            首次登陆时间
+            String firstSignTime = null;
+            for (Text value : values) {
+                String[] data = value.toString().split("\\s+");
+                if (grossTime == 0 )
+                    firstSignTime = data[2];
+                grossTime += Integer.valueOf(data[4]);
+                grossTimes++;
+            }
+            outputKey.set(key
+                    + "\t" +firstSignTime
+                    + "\t" + grossTime
+                    + "\t" + grossTimes);
+            context.write(outputKey, NullWritable.get());
         }
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 //        1.获得job和Configuration
         Configuration conf = new Configuration();
-        Job job = Job.getInstance(conf, "TOP20");
+        Job job = Job.getInstance(conf, "TOP20Info");
         job.setJarByClass(Top20Info.class);
 //        2.指定job的mapper和reducer
         job.setMapperClass(Top20InfoMapper.class);
@@ -60,7 +81,7 @@ public class Top20Info {
         FileInputFormat.addInputPath(job, new Path("/game-log"));
 //        7.设置文件输出路径
 //        如果不确定输出路径是否存在的话可以将输出路径删除
-        Path outputPath = new Path("/x/game-test");
+        Path outputPath = new Path("/x/game-Top20Info");
         FileSystem.get(conf).delete(outputPath,true);
         FileOutputFormat.setOutputPath(job, outputPath);
 
