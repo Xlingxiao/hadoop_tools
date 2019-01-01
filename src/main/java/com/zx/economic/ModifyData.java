@@ -1,4 +1,4 @@
-package com.zx.mapreduce.economic;
+package com.zx.economic;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -39,16 +39,16 @@ public class ModifyData {
                 String[] data = value.toString().split("\\s+");
 //                修改助攻数量
                 int seven = Integer.valueOf(data[7]);
-                seven = seven > 35 ? seven > 65 ? seven > 85 ? (int) (seven - seven * 0.8)
+                seven = seven > 35 ? seven > 65 ? seven > 85 ? (int) (seven - seven * 0.9)
+                        : (int) (seven - seven * 0.7)
                         : (int) (seven - seven * 0.6)
-                        : (int) (seven - seven * 0.5)
                         : seven;
                 data[7] = String.valueOf(seven);
 //                修改胜方补兵数量
                 if (data[1].equals("" + 1)) {
                     int times = Integer.parseInt(data[2]);
                     times = times + times * 3 / 10;
-                    data[2] = "" + times;
+                    data[2] = String.valueOf(times);
                 }
 
                 for (String datum : data) {

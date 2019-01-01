@@ -1,0 +1,8 @@
+#创建表结构，指定分隔符
+create table table_name(name string,site string,kda_avg )row format delimited fields terminated by '\t' stored as textfile ;
+#根据表的查询结果创建新表 最后一行是根据哪一列的值进行排序
+create table top_noob as select * from lucknoob order by kda_avg desc;
+#加载数据
+load data inpath '/input/noob' overwrite into table lucknoob;
+#下载到本地
+hive -e "select * from student where sex = '男'" > /tmp/output.txt

@@ -1,4 +1,4 @@
-package com.zx;
+package com.zx.test;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;

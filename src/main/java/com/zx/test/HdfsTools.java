@@ -1,11 +1,13 @@
-package com.zx;
+package com.zx.test;
 
 
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class HdfsTools {
 
@@ -24,8 +26,27 @@ public class HdfsTools {
         tools.init_config();
 //        tools.createDir("/testTools");
 //        tools.createFile("/testTools/
-        tools.test(new Path("/"));
+//        tools.test(new Path("/x/output"));
+        tools.printFileContent("/x/output/BestTime/part-r-00000");
         tools.closeHdfs();
+    }
+
+    /**
+     * 获取文件内容
+     * @param filePath 文件路径（HDFS）
+     * @throws IOException hdfs中找不到文件
+     */
+    void printFileContent(String filePath) throws IOException {
+        Path path = new Path(filePath);
+        FSDataInputStream FSin = fs.open(path);
+        BufferedReader br = new BufferedReader(new InputStreamReader(FSin));
+        String tmp ;
+        StringBuilder sb = new StringBuilder();
+        while ((tmp = br.readLine()) != null) {
+            sb.append(tmp).append("\n");
+        }
+        FSin.close();
+        System.out.println(sb.toString());
     }
 
     /**

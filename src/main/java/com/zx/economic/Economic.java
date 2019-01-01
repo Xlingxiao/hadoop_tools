@@ -1,4 +1,4 @@
-package com.zx.mapreduce.economic;
+package com.zx.economic;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -17,7 +17,7 @@ import java.io.IOException;
 
 /**
  * @program: hadoop_demo1
- * @description: 4.	游戏的胜利与团队的整体经济（补兵，击杀，助攻）相关。
+ * @description: 4.	游戏的胜利与团队的整体经济的关系
  * @author: Ling
  * @create: 2018-12-07 09:33
  **/

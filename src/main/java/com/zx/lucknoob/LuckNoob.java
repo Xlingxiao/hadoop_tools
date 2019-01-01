@@ -1,4 +1,4 @@
-package com.zx.mapreduce.lucknoob;
+package com.zx.lucknoob;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -48,7 +48,7 @@ public class LuckNoob {
         protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
             String[] sites = new String[]{"Up", "Ranger", "Mid", "Help", "Down"};
 //            所有赢的位置统计
-            int countSite[] = new int[5];
+            int[] countSite = new int[5];
 //            所有赢的kda 用于计算五分位值
             List<Float> KDACount = new LinkedList<>();
             for (Text value : values) {
@@ -92,7 +92,7 @@ public class LuckNoob {
             sb.append(sites[goodSite]).append(divideChar);
             sb.append(avg).append(divideChar);
             for (float v : fiveValue) {
-                sb.append(String.valueOf(v));
+                sb.append(v);
                 sb.append(divideChar);
             }
             outputKey.set(sb.toString());
